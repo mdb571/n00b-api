@@ -40,14 +40,15 @@ def attendance():
         table1 = soup.find("table")
         body=table1.find("tbody")
         subjects = soup.find_all('tr')
+        subjects.pop(-1)
         attendict={}
-        j=-1
+        j=0
         for i in subjects: 
             j+=1
             attendict[j]={}
             s=i.find_all('td')
             if s == []:
-                continues
+                continue
             attendict[j]["Name"]=str(s[1].string).replace('\\n                    ','')
             attendict[j]['Hours Attended']=s[2].string
             attendict[j]['Total Hours']=s[3].string
