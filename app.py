@@ -41,17 +41,18 @@ def attendance():
         body=table1.find("tbody")
         subjects = soup.find_all('tr')
         attendict={}
+        j=-1
         for i in subjects: 
-            for j in range(1,len(subjects)):
-                s=i.find_all('td')
-                if s == []:
-                    continue
-                # print(s[1].string)
-                attendict[j]={}
-                attendict[j]['Name']=s[1].string
-                attendict[j]['Hours Attended']=s[2].string
-                attendict[j]['Total Hours']=s[3].string
-                attendict[j]['Attendence Percentage']=s[4].string
+            j+=1
+            attendict[j]={}
+            s=i.find_all('td')
+            if s == []:
+                continues
+            attendict[j]["Name"]=str(s[1].string).replace('\\n                    ','')
+            attendict[j]['Hours Attended']=s[2].string
+            attendict[j]['Total Hours']=s[3].string
+            attendict[j]['Attendence Percentage']=s[4].string
+
 
 
     return jsonify({'subject':attendict})
