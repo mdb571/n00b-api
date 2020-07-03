@@ -38,10 +38,9 @@ def home():
 @app.route('/attendance', methods=['GET'])
 def attendance():
 
+        min_attendance=75
         r = session.get(attendence_url)
-
         soup = bs4.BeautifulSoup(r.text, 'lxml')
-
         table1 = soup.find("table")
         body = table1.find("tbody")
         subjects = soup.find_all('tr')
@@ -49,6 +48,7 @@ def attendance():
         attendict = {}
         j = 0
         for i in subjects:
+            x=1
             j += 1
             attendict[j] = {}
             s = i.find_all('td')
@@ -59,6 +59,18 @@ def attendance():
             attendict[j]['Hours Attended'] = s[2].string
             attendict[j]['Total Hours'] = s[3].string
             attendict[j]['Attendence Percentage'] = s[4].string
+            percentage=int(float(s[4].string.replace('%',''))) 
+            if percentage>=75:
+                bunk=(int(s[2].string) - (min_attendance/100*int(s[3].string)))/(min_attendance/100)
+                if int(bunk)==0:
+                    attendict[j]['Bunk Status']= "You can't bunk anymore"
+                else:
+                    attendict[j]['Bunk Status']= 'You can bunk '+str(int(bunk))+' classes'
+            else:
+                attend=((((min_attendance/100)*int(s[3].string)) - int(s[2].string)) / ((100-min_attendance)/100))
+
+                attendict[j]['Bunk Status']= 'You must attend '+str(int(attend))+' classes'
+   
 
         return jsonify({'subject':attendict})
 
