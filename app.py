@@ -110,6 +110,40 @@ def assignmentsem(semID):
 
     return jsonify({'assignmentMarks':assignmentdict})        
 
+@app.route('/internal',methods=['GET'])
+def internalhome():
+    return jsonify({'status':'OK','Message':'Specify sem  in the url to see response'})
+
+
+@app.route('/internal/sem=<semID>',methods=['GET'])
+def internals(semID):
+    internal={}
+    internal_url='https://tkmce.linways.com/student/mymark/ajax_mark_details.php?semID='
+    with requests.Session() as session:
+        post = session.post(url, data=payload)
+        internal_url+=semID
+        r = session.get(internal_url)
+        soup=bs4.BeautifulSoup(r.text,'lxml')
+        table=soup.find_all('table')
+        for elem in table:
+            testnum=elem.find('th').text.replace('\n','')
+            internal[testnum]={}
+            row=elem.find_all('tr')
+            for tr in row:
+                cols = tr.find_all('td')
+                
+                if cols!=[]:
+                    if len(cols)>3:
+                        internal[testnum][cols[0].text.replace('\xa0','')]={}
+                        internal[testnum][cols[0].text.replace('\xa0','')]["Marks Obtained"]=cols[1].text.replace('\xa0','')
+                        internal[testnum][cols[0].text.replace('\xa0','')]["Percentage"]=cols[2].text.replace('\xa0','')
+                        internal[testnum][cols[0].text.replace('\xa0','')]["Class Average"]=cols[3].text.replace('\xa0','')
+                        internal[testnum][cols[0].text.replace('\xa0','')]["Max Marks"]=cols[4].text.replace('\xa0','')
+
+
+    return jsonify({'internalMarks':internal})
+
+
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
