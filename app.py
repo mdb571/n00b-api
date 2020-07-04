@@ -1,14 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify,request
 from flask import make_response
 import requests
 import getpass
 import bs4
 app = Flask(__name__)
 
-payload = {
-    'studentAccount': '180051',
-    'studentPassword': '180051'
-}
+# payload = {
+#     'studentAccount': '180051',
+#     'studentPassword': '180051'
+# }
 
 url = 'https://tkmce.linways.com/student/'
 home_url = url + 'student.php?menu=home'
@@ -18,13 +18,25 @@ attendence_total='https://tkmce.linways.com/student/attendance/ajax_hour_wise.ph
 
 studentdata = {}
 
-with requests.Session() as session:
-    post = session.post(url, data=payload)
 
 
-@app.route('/', methods=['GET'])
+
+@app.route('/', methods=['GEt'])
+def index():
+    return(jsonify({'Status': '500','Error':'Send a POST request to view data '}))
+
+@app.route('/', methods=['POST'])
 def home():
-
+    request_data=request.get_json(force=True)
+    print(request_data)
+    global payload
+    studentdata={}
+    payload = {
+        'studentAccount': request_data['Username'],
+        'studentPassword':request_data['Pass']
+    }
+    with requests.Session() as session:
+     post = session.post(url, data=payload)
     r = session.get(home_url)
     soup = bs4.BeautifulSoup(r.text, 'html')
 
@@ -32,12 +44,13 @@ def home():
 
     studentdata['Batch'] = soup.select('.panel-heading')[1].getText()
 
-    return jsonify({'studentdata': studentdata})
+    return jsonify({'status':'OK','studentdata': studentdata})
 
 
 @app.route('/attendance', methods=['GET'])
 def attendance():
-
+    with requests.Session() as session:
+        post = session.post(url, data=payload)
         min_attendance=75
         r = session.get(attendence_url)
         soup = bs4.BeautifulSoup(r.text, 'lxml')
@@ -72,23 +85,24 @@ def attendance():
                 attendict[j]['Bunk Status']= 'You must attend '+str(int(attend))+' classes'
    
 
-        return jsonify({'subject':attendict})
+    return jsonify({'status':'OK','subject':attendict})
 
 
 
 @app.route('/attendance/total',methods=['GET'])
 def attendancetotal():
- 
-    attendencetotal={}
-    r = session.get(attendence_total)
-    soup=bs4.BeautifulSoup(r.text,'lxml')
-    table=soup.find('table')
-    elem=table.find_all('td')
-    elem.pop(0)
-    attendencetotal['Period']=table.thead.text.replace('\n','')
-    attendencetotal['Attended Hours']=elem[1].text.replace(":",'')
-    attendencetotal['Total Hours']=elem[3].text.replace(':','')
-    attendencetotal['Percentage']=elem[5].text.replace(':','')
+    with requests.Session() as session:
+        post = session.post(url, data=payload) 
+        attendencetotal={}
+        r = session.get(attendence_total)
+        soup=bs4.BeautifulSoup(r.text,'lxml')
+        table=soup.find('table')
+        elem=table.find_all('td')
+        elem.pop(0)
+        attendencetotal['Period']=table.thead.text.replace('\n','')
+        attendencetotal['Attended Hours']=elem[1].text.replace(":",'')
+        attendencetotal['Total Hours']=elem[3].text.replace(':','')
+        attendencetotal['Percentage']=elem[5].text.replace(':','')
 
     return(jsonify({'Attendance Overall':attendencetotal}))
 
@@ -100,27 +114,29 @@ def assignmenthome():
 
 @app.route('/assignment/sem=<semID>',methods=['GET'])
 def assignmentsem(semID):
-    assignmentdict={}
-    r = session.post(assignment_url,data={"semID":semID})
-    soup=bs4.BeautifulSoup(r.text,'lxml')
-    table=soup.find_all('table',{ "class" : "table table-striped" })
-    table.pop(0)
-    # row=[i.text.replace("\n",' ') for i in head]
-    for elem in table:
-        assignmentdict[elem.thead.text.replace('\n','')]={}
-        assignmentdict[elem.thead.text.replace('\n','')]['Subject']={}
-        row=elem.find_all('tr')
-        for tr in row:
-            cols = tr.find_all('td')
-            if cols==[]:
-                continue
-            if cols[0].text=="Subjects":
-                continue
-            assignmentdict[elem.thead.text.replace('\n','')]['Subject'][cols[0].text]={}
-            assignmentdict[elem.thead.text.replace('\n','')]['Subject'][cols[0].text]['Marks']=cols[1].text
-            assignmentdict[elem.thead.text.replace('\n','')]['Subject'][cols[0].text]['Max Marks']=cols[2].text
+    with requests.Session() as session:
+        post = session.post(url, data=payload)
+        assignmentdict={}
+        r = session.post(assignment_url,data={"semID":semID})
+        soup=bs4.BeautifulSoup(r.text,'lxml')
+        table=soup.find_all('table',{ "class" : "table table-striped" })
+        table.pop(0)
+        # row=[i.text.replace("\n",' ') for i in head]
+        for elem in table:
+            assignmentdict[elem.thead.text.replace('\n','')]={}
+            assignmentdict[elem.thead.text.replace('\n','')]['Subject']={}
+            row=elem.find_all('tr')
+            for tr in row:
+                cols = tr.find_all('td')
+                if cols==[]:
+                    continue
+                if cols[0].text=="Subjects":
+                    continue
+                assignmentdict[elem.thead.text.replace('\n','')]['Subject'][cols[0].text]={}
+                assignmentdict[elem.thead.text.replace('\n','')]['Subject'][cols[0].text]['Marks']=cols[1].text
+                assignmentdict[elem.thead.text.replace('\n','')]['Subject'][cols[0].text]['Max Marks']=cols[2].text
 
-    return jsonify({'assignmentMarks':assignmentdict})        
+    return jsonify({'status':'OK','assignmentMarks':assignmentdict})        
 
 @app.route('/internal',methods=['GET'])
 def internalhome():
@@ -128,7 +144,7 @@ def internalhome():
 
 
 @app.route('/internal/sem=<semID>',methods=['GET'])
-def internals(semID):
+def internal(semID):
     internal={}
     internal_url='https://tkmce.linways.com/student/mymark/ajax_mark_details.php?semID='
     with requests.Session() as session:
@@ -153,12 +169,12 @@ def internals(semID):
                         internal[testnum][cols[0].text.replace('\xa0','')]["Max Marks"]=cols[4].text.replace('\xa0','')
 
 
-    return jsonify({'internalMarks':internal})
+    return jsonify({'status':'OK','internalMarks':internal})
 
 
 @app.errorhandler(404)
 def not_found(error):
-    return make_response(jsonify({'error': 'Not found'}), 404)
+    return make_response(jsonify({'status':'Not found','error': 'Cannot find requested endpoint'}), 404)
 
   
 if __name__=='__main__':
