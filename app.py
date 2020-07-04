@@ -21,30 +21,33 @@ studentdata = {}
 
 
 
-@app.route('/', methods=['GEt'])
-def index():
-    return(jsonify({'Status': '500','Error':'Send a POST request to view data '}))
+# @app.route('/', methods=['GET'])
+# def index():
+#     return(jsonify({'Status': '500','Error':'Send a POST request to view data '}))
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['POST','GET'])
 def home():
-    request_data=request.get_json(force=True)
-    print(request_data)
-    global payload
-    studentdata={}
-    payload = {
-        'studentAccount': request_data['Username'],
-        'studentPassword':request_data['Pass']
-    }
-    with requests.Session() as session:
-     post = session.post(url, data=payload)
-    r = session.get(home_url)
-    soup = bs4.BeautifulSoup(r.text, 'html')
+    if request.method== 'GET':
+        return(jsonify({'Status': '500','Error':'Send a POST request to view data '}))
+    else:
+        request_data=request.get_json(force=True)
+        print(request_data)
+        global payload
+        studentdata={}
+        payload = {
+            'studentAccount': request_data['Username'],
+            'studentPassword':request_data['Pass']
+        }
+        with requests.Session() as session:
+            post = session.post(url, data=payload)
+        r = session.get(home_url)
+        soup = bs4.BeautifulSoup(r.text, 'html')
 
-    studentdata['Name'] = soup.select('.truncate')[0].getText()
+        studentdata['Name'] = soup.select('.truncate')[0].getText()
 
-    studentdata['Batch'] = soup.select('.panel-heading')[1].getText()
+        studentdata['Batch'] = soup.select('.panel-heading')[1].getText()
 
-    return jsonify({'status':'OK','studentdata': studentdata})
+        return jsonify({'status':'OK','studentdata': studentdata})
 
 
 @app.route('/attendance', methods=['GET'])
