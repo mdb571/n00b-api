@@ -8,8 +8,8 @@ import re
 app = Flask(__name__)
 
 # payload = {
-#     'studentAccount': '180051',
-#     'studentPassword': '180051'
+#     'studentAccount': '180xxx',
+#     'studentPassword': '180xxx'
 # }
 
 url = 'https://tkmce.linways.com/student/'
