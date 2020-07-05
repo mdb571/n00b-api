@@ -47,3 +47,8 @@ A Simple Flask api to scrape data from our college student portal [linways tkmce
  Feel free to open a pull request if you feel you can improve this project and add more functionalities
  
 Give a ⭐ if this project helped you ❤️
+
+<a href="https://github.com/mdb571/covidtrack-extension/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/mdb571/n00b-api?style=flat-square" alt="LICENSE" />
+  </a>
+  
