@@ -49,6 +49,6 @@ A Simple Flask api to scrape data from our college student portal [linways tkmce
 Give a ⭐ if this project helped you ❤️
 
 <a href="https://github.com/mdb571/n00b-api/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/mdb571/n00b-api?style=flat-square" alt="LICENSE" />
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="LICENSE" />
   </a>
   
