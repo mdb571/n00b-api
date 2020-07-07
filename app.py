@@ -11,7 +11,7 @@ app = Flask(__name__)
 #     'studentAccount': '180xxx',
 #     'studentPassword': '180xxx'
 # }
-
+base='https://tkmce.linways.com'
 url = 'https://tkmce.linways.com/student/'
 home_url = url + 'student.php?menu=home'
 attendence_url = 'https://tkmce.linways.com/student/attendance/ajax/ajax_subjectwise_attendance.php?action=GET_REPORT'
@@ -223,6 +223,24 @@ def notif():
                 notify[j]['Message'] = i.find('div').text
                 j+=1
             return(jsonify({'Status':'OK','Notifications':notify}))
+    else:
+        print(logged_in)
+        return  redirect(url_for('home'))
+
+@app.route('/profile')
+def prof():
+    if logged_in==True:
+        profile={}
+        with requests.Session() as session:
+            post = session.post(url, data=payload)
+        r = session.get(home_url)
+        soup = BeautifulSoup(r.text, 'lxml')
+        img=soup.find('div',{"class":"list-group-item text-center profile_pic"})
+        img=img.find('img')['src'].replace('..','')
+        photo=base+img
+        profile["Url"]=photo
+        return(jsonify({'Status':'OK','Profile Url':profile["Url"]}))
+
     else:
         print(logged_in)
         return  redirect(url_for('home'))
