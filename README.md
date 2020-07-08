@@ -18,11 +18,11 @@ A Simple Flask api to scrape data from our college student portal [linways tkmce
 #### Total Attendance `/attendance/all`
   - View the total attendance for the entire sem.
 #### Assignment `/assignment/sem=<sem>`
-  - View the assignment evaluation details of the specified semester `<sem>  
+  - View the assignment evaluation details of the specified semester <sem>  
     eg: `assignment/sem=4`
 #### Internals `/internal/sem=<sem>`
-  - View the Internals evaluation details of the specified semester `<sem>  
-    eg: `inetrnal/sem=4`
+  - View the Internals evaluation details of the specified semester <sem>  
+    eg: `internal/sem=4`
 #### Notifications `/notify`
   - View notifications of new assignments,Note and quizess etc.
     
