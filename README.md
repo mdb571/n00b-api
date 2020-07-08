@@ -13,7 +13,7 @@ A Simple Flask api to scrape data from our college student portal [linways tkmce
                     "Batch": "EEE2018, S4"
                     },
          "status":"OK"
-#### Attendancee `/attendance`
+#### Attendance `/attendance`
   - View the subject wise attendance details for the current semester
 #### Total Attendance `/attendance/all`
   - View the total attendance for the entire sem.
