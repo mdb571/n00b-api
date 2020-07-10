@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from flask import make_response,redirect
+from flask import make_response,redirect,render_template
 from flask import url_for
 import requests
 from bs4 import BeautifulSoup
@@ -26,7 +26,7 @@ logged_in=False
 @app.route('/', methods=['POST', 'GET'])
 def home():
     if request.method == 'GET':
-        return(jsonify({'Status': '401', 'Error': 'Please login to see details'}))
+        return(render_template('index.html'))
     else:
         request_data = request.get_json(force=True)
         print(request_data)
