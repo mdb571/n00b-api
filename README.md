@@ -1,5 +1,5 @@
 
-A Simple Flask api to scrape data from our college student portal [linways tkmce](https://tkmce.linways.com).This API can be used for your projects to create bots,mobile applications etc.However this is not the official one.This was done for development purposes only.
+A Simple Flask API to scrape data from our college student portal [linways tkmce](https://tkmce.linways.com).This API can be used for your projects to create bots,mobile applications etc.However this is not the official one.This was done for development purposes only.
 
 ## Endpoints
 
