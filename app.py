@@ -18,6 +18,8 @@ attendence_url = 'https://tkmce.linways.com/student/attendance/ajax/ajax_subject
 assignment_url = 'https://tkmce.linways.com/student/asimark/ajax_assignment_mark.php'
 attendence_total = 'https://tkmce.linways.com/student/attendance/ajax_hour_wise.php'
 internal_url = 'https://tkmce.linways.com/student/mymark/ajax_mark_details.php?semID='
+pending_url='https://tkmce.linways.com/student/mytask/ajax/ajaxMytask.php'
+
 logged_in=False
 # @app.route('/', methods=['GET'])
 # def index():
@@ -252,11 +254,25 @@ def pending():
             post = session.post(url, data=payload)
         r = session.post(pending_url,data={"action":"GET_STUDENT_ASSIGNMENT_LIST"})
         data=r.json()
+        pending={}
         for elem in data['data']:
+            i=0
             if elem['isSubmited']!=1:
-                print(elem['assiNu'],elem['submissionDate'],elem['submissionTime'],elem['subjectDesc'],elem['assignmentID'])
-    
+               pending[elem['subjectDesc']]=[]
+                assigndetails={}
+                if len(pending[elem['subjectDesc']])!=1:
 
+                # pending[elem['subjectDesc']]=[]
+                assigndetails[elem['subjectDesc']]={}
+                assigndetails[elem['subjectDesc']]['Assignment No.']=elem['assiNu']
+                assigndetails[elem['subjectDesc']]['Submission Date']=elem['submissionDate']
+                assigndetails[elem['subjectDesc']]['Submission Time']=elem['submissionTime']
+                assigndetails[elem['subjectDesc']]['assignID']=elem['assignmentID']
+                pending[elem['subjectDesc']].append(assigndetails[elem['subjectDesc']])
+        return jsonify({'Status':'OK','PendingAssign':pending})
+    else:
+        print(logged_in)
+        return  redirect(url_for('home'))
 
 @app.errorhandler(404)
 def not_found(error):
