@@ -245,6 +245,18 @@ def prof():
         print(logged_in)
         return  redirect(url_for('home'))
 
+@app.route('/pending',methods=['GET'])
+def pending():
+    if logged_in==True:
+        with requests.Session() as session:
+            post = session.post(url, data=payload)
+        r = session.post(pending_url,data={"action":"GET_STUDENT_ASSIGNMENT_LIST"})
+        data=r.json()
+        for elem in data['data']:
+            if elem['isSubmited']!=1:
+                print(elem['assiNu'],elem['submissionDate'],elem['submissionTime'],elem['subjectDesc'],elem['assignmentID'])
+    
+
 
 @app.errorhandler(404)
 def not_found(error):
