@@ -1,37 +1,53 @@
-<p>A Simple Flask api to scrape data from our college student portal <a href="https://tkmce.linways.com">linways tkmce</a>.This API can be used for your projects to create bots,mobile applications etc.However this is not the official one.This was done for development purposes only.</p>
-<h2 id="endpoints">Endpoints</h2>
-<h4 id="home-request-method-post-">Home <code>/</code> <code>Request method=POST</code></h4>
+<p class="has-line-data" data-line-start="1" data-line-end="2">A Simple Flask API to scrape data from our college student portal <a href="https://tkmce.linways.com">linways tkmce</a>.This API can be used for your projects to create bots,mobile applications etc.However this is not the official one.This was done for development purposes only.</p>
+<h2 class="code-line" data-line-start=3 data-line-end=4 ><a id="Endpoints_3"></a>Endpoints</h2>
+<h4 class="code-line" data-line-start=5 data-line-end=6 ><a id="Home__Request_methodPOST_5"></a>Home <code>/</code> <code>Request method=POST</code></h4>
 <ul>
-<li>Send a <code>POST</code> request with the <strong>json body</strong> <code>{&quot;Username&quot;:&quot;ADMNO&quot;,&quot;Pass&quot;:&quot;SOMEPASS&quot;}</code> to perform login</br>
-eg: <code>{&quot;Username&quot;:&quot;181234&quot;,&quot;Pass&quot;:&quot;181234&quot;}</code> </br>
-Sample response:
-```{<pre><code><span class="hljs-string">"studendata"</span><span class="hljs-symbol">:</span>{
-            <span class="hljs-string">"Name"</span><span class="hljs-symbol">:Romero</span>, 
-            <span class="hljs-string">"Batch"</span>: <span class="hljs-string">"EEE2018, S4"</span>
-            },
- <span class="hljs-string">"status"</span><span class="hljs-symbol">:<span class="hljs-string">"OK"</span></span>
-</code></pre><h4 id="attendance-attendance-">Attendance <code>/attendance</code></h4>
+<li class="has-line-data" data-line-start="6" data-line-end="15">Send a <code>POST</code> request with the <strong>json body</strong> <code>{&quot;Username&quot;:&quot;ADMNO&quot;,&quot;Pass&quot;:&quot;SOMEPASS&quot;}</code> to perform login&lt;/br&gt;<br>
+eg: <code>{&quot;Username&quot;:&quot;181234&quot;,&quot;Pass&quot;:&quot;181234&quot;}</code> &lt;/br&gt;<br>
+Sample response:<pre><code class="has-line-data" data-line-start="10" data-line-end="15" class="language-{">    &quot;studendata&quot;:{
+                &quot;Name&quot;:Romero, 
+                &quot;Batch&quot;: &quot;EEE2018, S4&quot;
+                },
+     &quot;status&quot;:&quot;OK&quot;
+</code></pre>
 </li>
-<li>View the subject wise attendance details for the current semester<h4 id="total-attendance-attendance-all-">Total Attendance <code>/attendance/all</code></h4>
-</li>
-<li>View the total attendance for the entire sem.<h4 id="assignment-assignment-sem-sem-">Assignment <code>/assignment/sem=&lt;sem&gt;</code></h4>
-</li>
-<li>View the assignment evaluation details of the specified semester <sem><br>eg: <code>assignment/sem=4</code><h4 id="internals-internal-sem-sem-">Internals <code>/internal/sem=&lt;sem&gt;</code></h4>
-</li>
-<li>View the Internals evaluation details of the specified semester <sem><br>eg: <code>internal/sem=4</code><h4 id="notifications-notify-">Notifications <code>/notify</code></h4>
-</li>
-<li>View notifications of new assignments,Note and quizess etc.</li>
 </ul>
-<h2 id="development">Development</h2>
-<h4 id="clone-the-repo-">Clone the repo :</h4>
-<p><code>git clone https://github.com/mdb571/n00b-api.git</code></p>
-<h4 id="install-dependencies-">Install dependencies :</h4>
-<p><code>pip install -r requirements.txt</code></p>
-<h4 id="run-server">Run server</h4>
-<p><code>flask run</code></p>
-<h2 id="contribution">Contribution</h2>
-<p> Feel free to open a pull request if you feel you can improve this project and add more functionalities</p>
-<p>Give a ⭐ if this project helped you ❤️</p>
-<p><a href="https://github.com/mdb571/n00b-api/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="LICENSE" />
-  </a></p>
+<h4 class="code-line" data-line-start=15 data-line-end=16 ><a id="Attendance_attendance_15"></a>Attendance <code>/attendance</code></h4>
+<ul>
+<li class="has-line-data" data-line-start="16" data-line-end="17">View the subject wise attendance details for the current semester</li>
+</ul>
+<h4 class="code-line" data-line-start=17 data-line-end=18 ><a id="Total_Attendance_attendanceall_17"></a>Total Attendance <code>/attendance/all</code></h4>
+<ul>
+<li class="has-line-data" data-line-start="18" data-line-end="19">View the total attendance for the entire sem.</li>
+</ul>
+<h4 class="code-line" data-line-start=19 data-line-end=20 ><a id="Assignment_assignmentsemsem_19"></a>Assignment <code>/assignment/sem=&lt;sem&gt;</code></h4>
+<ul>
+<li class="has-line-data" data-line-start="20" data-line-end="22">View the assignment evaluation details of the specified semester &lt;sem&gt;<br>
+eg: <code>assignment/sem=4</code></li>
+</ul>
+<h4 class="code-line" data-line-start=22 data-line-end=23 ><a id="Internals_internalsemsem_22"></a>Internals <code>/internal/sem=&lt;sem&gt;</code></h4>
+<ul>
+<li class="has-line-data" data-line-start="23" data-line-end="25">View the Internals evaluation details of the specified semester &lt;sem&gt;<br>
+eg: <code>internal/sem=4</code></li>
+</ul>
+<h4 class="code-line" data-line-start=25 data-line-end=26 ><a id="Notifications_notify_25"></a>Notifications <code>/notify</code></h4>
+<ul>
+<li class="has-line-data" data-line-start="26" data-line-end="27">View notifications of new assignments,Note and quizess etc.</li>
+</ul>
+<h4 class="code-line" data-line-start=27 data-line-end=28 ><a id="Pending_Assignments_pending_27"></a>Pending Assignments <code>/pending</code></h4>
+<ul>
+<li class="has-line-data" data-line-start="28" data-line-end="29">View details of pending assignments.</li>
+</ul>
+<h2 class="code-line" data-line-start=32 data-line-end=33 ><a id="Development_32"></a>Development</h2>
+<h4 class="code-line" data-line-start=34 data-line-end=35 ><a id="Clone_the_repo__34"></a>Clone the repo :</h4>
+<p class="has-line-data" data-line-start="36" data-line-end="37"><code>git clone https://github.com/mdb571/n00b-api.git</code></p>
+<h4 class="code-line" data-line-start=38 data-line-end=39 ><a id="Install_dependencies__38"></a>Install dependencies :</h4>
+<p class="has-line-data" data-line-start="40" data-line-end="41"><code>pip install -r requirements.txt</code></p>
+<h4 class="code-line" data-line-start=42 data-line-end=43 ><a id="Run_server_42"></a>Run server</h4>
+<p class="has-line-data" data-line-start="44" data-line-end="45"><code>flask run</code></p>
+<h2 class="code-line" data-line-start=46 data-line-end=47 ><a id="Contribution_46"></a>Contribution</h2>
+<p class="has-line-data" data-line-start="48" data-line-end="49">Feel free to open a pull request if you feel you can improve this project and add more functionalities</p>
+<p class="has-line-data" data-line-start="50" data-line-end="51">Give a ⭐ if this project helped you ❤️</p>
+<p class="has-line-data" data-line-start="52" data-line-end="55">&lt;a href=&quot;<a href="https://github.com/mdb571/n00b-api/blob/master/LICENSE">https://github.com/mdb571/n00b-api/blob/master/LICENSE</a>“&gt;<br>
+&lt;img src=”<a href="https://img.shields.io/badge/License-MIT-yellow.svg">https://img.shields.io/badge/License-MIT-yellow.svg</a>&quot; alt=“LICENSE” /&gt;<br>
+&lt;/a&gt;</p>
