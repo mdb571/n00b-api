@@ -257,11 +257,10 @@ def pending():
         pending={}
         for elem in data['data']:
             i=0
-            if elem['isSubmited']!=1:
-               pending[elem['subjectDesc']]=[]
+            if elem['isSubmited']=='0':
+                if elem['subjectDesc'] not in pending:
+                    pending[elem['subjectDesc']]=[]
                 assigndetails={}
-                if len(pending[elem['subjectDesc']])!=1:
-
                 # pending[elem['subjectDesc']]=[]
                 assigndetails[elem['subjectDesc']]={}
                 assigndetails[elem['subjectDesc']]['Assignment No.']=elem['assiNu']
