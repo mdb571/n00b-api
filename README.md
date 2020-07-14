@@ -25,6 +25,8 @@ A Simple Flask API to scrape data from our college student portal [linways tkmce
     eg: `internal/sem=4`
 #### Notifications `/notify`
   - View notifications of new assignments,Note and quizess etc.
+#### Pending Assignments `/pending`
+  - View details of pending assignments.
     
 
 
