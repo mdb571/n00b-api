@@ -263,7 +263,7 @@ def pending():
                 assigndetails={}
                 # pending[elem['subjectDesc']]=[]
                 assigndetails[elem['subjectDesc']]={}
-                assigndetails[elem['subjectDesc']]['Assignment No.']=elem['assiNu']
+                assigndetails[elem['subjectDesc']]['Assignment No']=elem['assiNu']
                 assigndetails[elem['subjectDesc']]['Submission Date']=elem['submissionDate']
                 assigndetails[elem['subjectDesc']]['Submission Time']=elem['submissionTime']
                 assigndetails[elem['subjectDesc']]['assignID']=elem['assignmentID']
