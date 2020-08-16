@@ -1,0 +1,2 @@
+- name: Twilio-Whatsapp Action
+  uses: mdb571/wa-action@v1.0
