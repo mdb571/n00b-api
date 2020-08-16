@@ -1,2 +1,25 @@
-- name: Twilio-Whatsapp Action
-  uses: mdb571/wa-action@v1.0
+name:  Whatsapp Notify
+on:
+  issue_comment:
+    types: created
+  pull_request:
+    types: [opened, closed, edited, ready_for_review, review_requested, reopened]
+  issues:
+    types: [opened, edited, pinned, closed, reopened, assigned, labeled]
+  page_build:
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: wa-notify
+        uses: mdb571/wa-action@master
+        with:
+          from: ${{ secrets.FROM }}
+          to: ${{secrets.TO }}
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH }}
